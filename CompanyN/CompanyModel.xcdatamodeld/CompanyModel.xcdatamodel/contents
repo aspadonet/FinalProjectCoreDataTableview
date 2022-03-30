@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Address" representedClassName="Address" syncable="YES" codeGenerationType="class">
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="houseNo" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="street" optional="YES" attributeType="String"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="address" inverseEntity="Employee"/>
+    </entity>
+    <entity name="Employee" representedClassName="Employee" syncable="YES" codeGenerationType="class">
+        <attribute name="canHaveSubmissed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="employeeType" optional="YES" attributeType="String"/>
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="office" optional="YES" attributeType="String"/>
+        <attribute name="socialid" optional="YES" attributeType="String"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="employee" inverseEntity="Address"/>
+        <relationship name="employeeInformation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EmployeeInformation" inverseName="employee" inverseEntity="EmployeeInformation"/>
+        <relationship name="employeeList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EmployeeList" inverseName="employee" inverseEntity="EmployeeList"/>
+        <relationship name="managerList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ManagerList" inverseName="employee" inverseEntity="ManagerList"/>
+    </entity>
+    <entity name="EmployeeInformation" representedClassName="EmployeeInformation" syncable="YES" codeGenerationType="class">
+        <attribute name="hiringDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="employeeInformation" inverseEntity="Employee"/>
+    </entity>
+    <entity name="EmployeeList" representedClassName="EmployeeList" syncable="YES" codeGenerationType="class">
+        <attribute name="socialid" optional="YES" attributeType="String"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="employeeList" inverseEntity="Employee"/>
+    </entity>
+    <entity name="ManagerList" representedClassName="ManagerList" syncable="YES" codeGenerationType="class">
+        <attribute name="socialid" optional="YES" attributeType="String"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="managerList" inverseEntity="Employee"/>
+    </entity>
+    <elements>
+        <element name="Address" positionX="268.8177490234375" positionY="-48.85369873046874" width="128" height="103"/>
+        <element name="Employee" positionX="-224.3880004882812" positionY="-52.36312866210938" width="128" height="193"/>
+        <element name="EmployeeInformation" positionX="350.30615234375" positionY="68.52551269531247" width="128" height="103"/>
+        <element name="EmployeeList" positionX="57.8482666015625" positionY="202.2887573242189" width="288.58984375" height="73"/>
+        <element name="ManagerList" positionX="-518.3286743164064" positionY="204.0470886230469" width="128" height="73"/>
+    </elements>
+</model>
