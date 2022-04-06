@@ -2,7 +2,7 @@
 //  EmployeeController.swift
 //  CompanyN
 //
-//  Created by 111 on 9/28/21.
+//  Created by Alexander Avdacev on 9/28/21.
 //  Copyright © 2021 111. All rights reserved.
 //
 
@@ -23,8 +23,6 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
@@ -33,7 +31,6 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(addwork))
         
         setupTableView()
-
         setupConstraint()
         
     }
@@ -42,22 +39,24 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - setup TableView
     
     func setupTableView(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        self.tableView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
-        self.tableView.separatorStyle = .none
-        tableView.register(ListEmployeeTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.allowsSelection = true
-        tableView.bounces = false
-        tableView.isUserInteractionEnabled = true
+        tableView.dataSource             = self
+        tableView.delegate               = self
+        self.tableView.backgroundColor   = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+        self.tableView.separatorStyle    = .none
+        tableView.register(ListEmployeeTableViewCell.self,
+                           forCellReuseIdentifier: reuseIdentifier)
+        tableView.allowsSelection           = true
+        tableView.bounces                   = false
+        tableView.isUserInteractionEnabled  = true
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // MARK: - UITableView
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?  {
-        let customHeaderView = CustomHeaderView()
-        customHeaderView.employee = employee
+        let customHeaderView        = CustomHeaderView()
+        customHeaderView.employee   = employee
         return customHeaderView
     }
 
@@ -67,15 +66,16 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ListEmployeeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                 for: indexPath) as! ListEmployeeTableViewCell
         let employees = employeelist[indexPath.row]
         cell.employee = employees
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let employee = employeelist[indexPath.row]
-        let employeeController = EmployeeController()
+        let employee                = employeelist[indexPath.row]
+        let employeeController      = EmployeeController()
         employeeController.employee = employee
         navigationController?.pushViewController(employeeController, animated: true)
         
@@ -99,9 +99,7 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         deleteItem.backgroundColor = .red
-        
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteItem])
-        
         return swipeActions
     }
     
@@ -109,9 +107,7 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     
     func delManagerList(employeedel: Employee){
         let context = CoreDataManager.shared.persistentContainer.viewContext
-
         guard let list = employeedel.managerList?.allObjects as? [ManagerList] else {return}
-
         for item in list{
             if item.socialid == self.employee?.socialid{
                 employeedel.removeFromManagerList(item)
@@ -137,12 +133,9 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         for item in list{
             if item.socialid == employeedel.socialid{
                 self.employee?.removeFromEmployeeList(item)
-                
                 deletFromContext = item
                 context.delete(deletFromContext)
             }
-            
-            
         }
         
         do {
@@ -157,13 +150,12 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - save manager and employee lists
     
     func saveManagerList(employee: Employee){
-        let contex = CoreDataManager.shared.persistentContainer.viewContext
-        let managerList = ManagerList(context: contex)
-        managerList.socialid = self.employee?.socialid
+        let contex              = CoreDataManager.shared.persistentContainer.viewContext
+        let managerList         = ManagerList(context: contex)
+        managerList.socialid    = self.employee?.socialid
         
-        managerList.employee = employee
+        managerList.employee    = employee
         CoreDataManager.shared.saveContex()
-        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2){
             
         }
@@ -171,13 +163,12 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func saveEmployeelist(employee: Employee){
-        let contex = CoreDataManager.shared.persistentContainer.viewContext
-        let employeeList = EmployeeList(context: contex)
+        let contex            = CoreDataManager.shared.persistentContainer.viewContext
+        let employeeList      = EmployeeList(context: contex)
         employeeList.socialid = employee.socialid
         
         employeeList.employee = self.employee
         CoreDataManager.shared.saveContex()
-        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2){
             
         }
@@ -186,10 +177,10 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - add work button - create ListEmployee TableViewController
     
     @objc func addwork(){
-        let createListEmployeeTableViewController = ListEmployeeTableViewController()
+        let createListEmployeeTableViewController      = ListEmployeeTableViewController()
         createListEmployeeTableViewController.delegate = self
         createListEmployeeTableViewController.employee = employee
-        let navController = UINavigationController(rootViewController: createListEmployeeTableViewController)
+        let navController                              = UINavigationController(rootViewController:                                                     createListEmployeeTableViewController)
         present(navController, animated: true, completion: nil)
         
     }
@@ -201,14 +192,12 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         for item in employees{
             saveEmployeelist(employee: item)
             saveManagerList(employee: item)
-            let row = employeelist.count
-            let indexPath = IndexPath(row: row, section: 0)
+            let row         = employeelist.count
+            let indexPath   = IndexPath(row: row, section: 0)
             employeelist.append(item)
             tableView.insertRows(at: [indexPath], with: .middle)
         }
-
         tableView.reloadData()
-
     }
     
     func createEmployeeList(){
@@ -216,11 +205,11 @@ class EmployeeController: UIViewController, UITableViewDelegate, UITableViewData
         
         for item in list{
             let predicateEmployee = NSPredicate(format: "socialid == %@", item.socialid!)
-            let resultEmployee = CoreDataManager.shared.getARecord(entityName: "Employee", predicate: predicateEmployee)
-            let employeeT = resultEmployee?.first as! Employee
+            let resultEmployee    = CoreDataManager.shared.getARecord(entityName: "Employee",
+                                                                      predicate: predicateEmployee)
+            let employeeT         = resultEmployee?.first as! Employee
             employeelist.append(employeeT)
-        }
-        
+        }        
         tableView.reloadData()
     }
     

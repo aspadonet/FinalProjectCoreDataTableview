@@ -2,7 +2,7 @@
 //  SearchController.swift
 //  CompanyN
 //
-//  Created by 111 on 9/23/21.
+//  Created by Alexander Avdacev on 9/23/21.
 //  Copyright © 2021 111. All rights reserved.
 //
 
@@ -17,10 +17,10 @@ class SearchController: EmployeeInOfficeViewController {
     var filteredResults = [[Employee]]()
     
     fileprivate let enterSearchTermLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Please enter search term above..."
+        let label           = UILabel()
+        label.text          = "Please enter search term above..."
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font          = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     
@@ -33,11 +33,11 @@ class SearchController: EmployeeInOfficeViewController {
     }
     
     fileprivate func setupSearchBar() {
-        definesPresentationContext = true
-        navigationItem.searchController = self.searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
+        definesPresentationContext                        = true
+        navigationItem.searchController                   = self.searchController
+        navigationItem.hidesSearchBarWhenScrolling        = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate               = self
     }
 }
 
@@ -52,7 +52,7 @@ extension SearchController: UISearchBarDelegate {
         }
         
         allEmployees = allEmployees.map({ (group) -> [Employee] in
-            return group.filter { $0.firstName?.lowercased().contains(searchText.lowercased()) as! Bool}
+            return group.filter{ $0.firstName?.lowercased().contains(searchText.lowercased()) as! Bool}
         })
         
         tableView.reloadData()

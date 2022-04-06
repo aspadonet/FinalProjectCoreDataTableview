@@ -2,7 +2,7 @@
 //  ListEmployeeTableViewController.swift
 //  CompanyN
 //
-//  Created by 111 on 9/25/21.
+//  Created by Alexander Avdacev on 9/25/21.
 //  Copyright © 2021 111. All rights reserved.
 //
 
@@ -18,11 +18,10 @@ class ListEmployeeTableViewController: UITableViewController {
     var employees = [Employee]()
     var delegate: ListEmployeeTableViewControllerDelegate?
     var selectionEmployees = [Employee]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         getEmployee()
-        
         tableView.register(ListEmployeeTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.allowsMultipleSelection = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(selection))
@@ -43,7 +42,6 @@ class ListEmployeeTableViewController: UITableViewController {
         for item in employeList {
             
             guard let socialid = item.socialid else { return }
-            
             let predicate = NSPredicate(format: "socialid == %@", socialid)
             let result = CoreDataManager.shared.getARecord(entityName: "Employee", predicate: predicate)
             let employeeDelete = result?.first as! Employee
@@ -55,7 +53,6 @@ class ListEmployeeTableViewController: UITableViewController {
         
         for item in managerList {
             guard let socialid = item.socialid else { return }
-            
             let predicate = NSPredicate(format: "socialid == %@", socialid)
             let result = CoreDataManager.shared.getARecord(entityName: "Employee", predicate: predicate)
             let employeeDelete = result?.first as! Employee
@@ -88,20 +85,16 @@ class ListEmployeeTableViewController: UITableViewController {
     }
     // MARK: - Table view data source
     
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return employees.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ListEmployeeTableViewCell
-        let employee = employees[indexPath.row]
-        cell.employee = employee
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                 for: indexPath) as! ListEmployeeTableViewCell
+        let employee        = employees[indexPath.row]
+        cell.employee       = employee
         cell.selectionStyle = .none
-        
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -110,7 +103,6 @@ class ListEmployeeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 48
     }

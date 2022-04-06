@@ -2,7 +2,7 @@
 //  EmployeeHeaderView.swift
 //  CompanyN
 //
-//  Created by 111 on 9.09.21.
+//  Created by Alexander Avdacev on 9.09.21.
 //  Copyright © 2021 111. All rights reserved.
 //
 
@@ -11,10 +11,9 @@ import UIKit
 class EmployeeHeaderView: UITableViewHeaderFooterView {
     
     let headerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "HeaderName"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        
+        let label   = UILabel()
+        label.text  = "HeaderName"
+        label.font  = UIFont.boldSystemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

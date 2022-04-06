@@ -9,19 +9,19 @@
 import Foundation
 
 struct EmployeeTemp {
-    var firstName: String
-    var office: String
-    var socialid: String
-    var lastName: String
+    var firstName:   String
+    var office:      String
+    var socialid:    String
+    var lastName:    String
        
-    var phone: String
-    var hiringDate: Date
-    var imageData: Data?
+    var phone:       String
+    var hiringDate:  Date
+    var imageData:   Data?
 
     
-    var city: String
-    var street: String
-    var houseNo: Int16
+    var city:        String
+    var street:      String
+    var houseNo:     Int16
     
   
 }

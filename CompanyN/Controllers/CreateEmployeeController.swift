@@ -2,7 +2,7 @@
 //  CreatEmployeeViewController.swift
 //  CompanyN
 //
-//  Created by 111 on 9/15/21.
+//  Created by Alexander Avdacev on 9/15/21.
 //  Copyright © 2021 111. All rights reserved.
 //
 
@@ -35,31 +35,31 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
             guard let employee = employee else {return}
             
             firstNameTextField.text = employee.firstName
-            lastNameTextField.text = employee.lastName
-            socialidTextField.text = employee.socialid
+            lastNameTextField.text  = employee.lastName
+            socialidTextField.text  = employee.socialid
             
-            guard  let phoneText = employee.employeeInformation?.phone else {return}
+            guard  let phoneText    = employee.employeeInformation?.phone else {return}
             
-            let dateFormatter = DateFormatter()
+            let dateFormatter       = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
-            phoneTextField.text = phoneText
+            phoneTextField.text     = phoneText
             
-            guard  let hiringDate = employee.employeeInformation?.hiringDate else {return}
+            guard  let hiringDate   = employee.employeeInformation?.hiringDate else {return}
             
-            hiringDateField.text = dateFormatter.string(from: hiringDate)
-            cityField.text = employee.address?.city
+            hiringDateField.text    = dateFormatter.string(from: hiringDate)
+            cityField.text          = employee.address?.city
             
             if let imageData = employee.employeeInformation?.imageData {
                 employeeImageView.image = UIImage(data: imageData)
                 setupCircularImageStyle()
             }else {
-                employeeImageView.image = UIImage(named: "Image")
+                employeeImageView.image = UIImage(named: "avatar")
             }
             
             guard let houseNoInt = employee.address?.houseNo else {return}
             
-            houseNoField.text = String(houseNoInt)
-            streetField.text = employee.address?.street
+            houseNoField.text   = String(houseNoInt)
+            streetField.text    = employee.address?.street
             
             guard let employeeType = employee.office else {return}
             
@@ -71,23 +71,23 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
     
     var delegate: CreateEmployeeControllerDelegate?
     
-    let firstNameLabel = UILabel(text: "First Name")
-    let lastNameLabel = UILabel(text: "Last Name")
-    let socialidLabel = UILabel(text: "Socialid NO")
-    let phoneTextLabel = UILabel(text: "Phone")
+    let firstNameLabel  = UILabel(text: "First Name")
+    let lastNameLabel   = UILabel(text: "Last Name")
+    let socialidLabel   = UILabel(text: "Socialid NO")
+    let phoneTextLabel  = UILabel(text: "Phone")
     let hiringDateLabel = UILabel(text: "Hiring Date")
-    let cityLabel = UILabel(text: "City")
-    let houseNoLabel = UILabel(text: "HouseNo")
-    let streetLabel = UILabel(text: "Street")
+    let cityLabel       = UILabel(text: "City")
+    let houseNoLabel    = UILabel(text: "HouseNo")
+    let streetLabel     = UILabel(text: "Street")
     
-    let firstNameTextField = UITextField(placeholder: "Enter First Name", text: "")
-    let lastNameTextField = UITextField(placeholder: "Enter Last Name", text: "")
-    let socialidTextField = UITextField(placeholder: "Enter Socialid NO", text: "")
-    let phoneTextField = UITextField(placeholder: "Phone", text: "")
-    let hiringDateField = UITextField(placeholder: "MM/dd/yyyy", text: "")
-    let cityField = UITextField(placeholder: "Enter City", text: "")
-    let houseNoField = UITextField(placeholder: "Enter HouseNo", text: "")
-    let streetField = UITextField(placeholder: "Enter Street", text: "")
+    let firstNameTextField  = UITextField(placeholder: "Enter First Name", text: "")
+    let lastNameTextField   = UITextField(placeholder: "Enter Last Name", text: "")
+    let socialidTextField   = UITextField(placeholder: "Enter Socialid NO", text: "")
+    let phoneTextField      = UITextField(placeholder: "Phone", text: "")
+    let hiringDateField     = UITextField(placeholder: "MM/dd/yyyy", text: "")
+    let cityField           = UITextField(placeholder: "Enter City", text: "")
+    let houseNoField        = UITextField(placeholder: "Enter HouseNo", text: "")
+    let streetField         = UITextField(placeholder: "Enter Street", text: "")
     
     let employeeOfficeSegmentedControl: UISegmentedControl = {
         
@@ -130,7 +130,7 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let edidImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+        if let edidImage            = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
             employeeImageView.image = edidImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             employeeImageView.image = originalImage
@@ -144,7 +144,7 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
     
     private func setupCircularImageStyle() {
         employeeImageView.layer.cornerRadius = employeeImageView.frame.width / 2
-        employeeImageView.clipsToBounds = true
+        employeeImageView.clipsToBounds     = true
         employeeImageView.layer.borderColor = UIColor.darkBlue.cgColor
         employeeImageView.layer.borderWidth = 2
     }
@@ -159,13 +159,12 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
         
         setupConstraint()
         firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        phoneTextField.delegate = self
-        hiringDateField.delegate = self
-        cityField.delegate = self
-        houseNoField.delegate = self
-        
-        streetField.delegate = self
+        lastNameTextField.delegate  = self
+        phoneTextField.delegate     = self
+        hiringDateField.delegate    = self
+        cityField.delegate          = self
+        houseNoField.delegate       = self
+        streetField.delegate        = self
         phoneTextField.keyboardType = .numberPad
         
         
@@ -243,8 +242,6 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
         
         guard let houseNoString = houseNoField.text else { return }
         
-        
-        
         let houseNo = Int16(houseNoString)
         
         if houseNoString.isEmpty {
@@ -302,12 +299,22 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
             return
         }
         
-        guard let employeeImageData = employeeImageView.image?.jpegData(compressionQuality: 1) else {
-            //            let image = UIImage(named: "Image")
-            //            //let data = image?.pngData()
-            //            let data = image?.jpegData(compressionQuality: 0.9)
-            //            employeeImageData = data
-            return
+//        var employeeImageData: Data?
+//        if employeeImageView.image?.jpegData(compressionQuality: 1) != nil
+//        {
+//            employeeImageData = employeeImageView.image?.jpegData(compressionQuality: 1)
+//        } else {
+//                        let image = UIImage(named: "avatar")
+//                        let data = image?.jpegData(compressionQuality: 0.9)
+//                        employeeImageData = data
+//        }
+        
+        var employeeImageData = employeeImageView.image?.pngData()//.jpegData(compressionQuality: 1)
+        if employeeImageData == nil {
+            let image = UIImage(named: "avatar")
+            let data = image?.pngData()
+            //let data = image?.jpegData(compressionQuality: 0.9)
+            employeeImageData = data
         }
         
         guard let employeeOffice = employeeOfficeSegmentedControl.titleForSegment(at: employeeOfficeSegmentedControl.selectedSegmentIndex) else {return}
@@ -316,36 +323,30 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
         
         let contex = CoreDataManager.shared.persistentContainer.viewContext
         
-        employee.firstName = firstNameTextField.text
+        employee.firstName                          = firstNameTextField.text
+        employee.firstName                          = firstName
+        employee.office                             = employeeOffice
+        employee.lastName                           = lastName
+        employee.socialid                           = socialid
+        employee.employeeInformation?.phone         = phoneText
+        employee.employeeInformation?.hiringDate    = hiringDate
+        employee.employeeInformation?.imageData     = employeeImageData
+        employee.address?.city                      = city
+        employee.address?.street                    = street
+        employee.address?.houseNo                   = houseNo ?? 0
         employee.office = employeeOfficeSegmentedControl.titleForSegment(at: employeeOfficeSegmentedControl.selectedSegmentIndex)
-        employee.firstName = firstName
-        employee.office = employeeOffice
-        employee.lastName = lastName
-        employee.socialid = socialid
-        employee.employeeInformation?.phone = phoneText
-        employee.employeeInformation?.hiringDate = hiringDate
-        employee.employeeInformation?.imageData = employeeImageData
-        employee.address?.city = city
-        employee.address?.street = street
-        employee.address?.houseNo = houseNo ?? 0
-        
         
         do {
             try contex.save()
         } catch let error {
             print(error.localizedDescription)
         }
-        
-        
-        
         dismiss(animated: true) {
             self.delegate?.editEmployee(employee: self.employee!)
         }
-        
     }
     
     private func createEmployee() {
-        
         
         guard let city = cityField.text else {return}
         
@@ -355,9 +356,7 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
         }
         
         guard let houseNoString = houseNoField.text else { return }
-        
-        
-        
+                
         let houseNo = Int16(houseNoString)
         
         if houseNoString.isEmpty {
@@ -415,7 +414,16 @@ class CreateEmployeeController: UIViewController, UIImagePickerControllerDelegat
             return
         }
         
-        guard let employeeImageData = employeeImageView.image?.jpegData(compressionQuality: 1) else { return }
+        //guard let employeeImageData = employeeImageView.image?.jpegData(compressionQuality: 1) else { return }
+        
+        var employeeImageData = employeeImageView.image?.pngData()//.jpegData(compressionQuality: 1)
+        if employeeImageData == nil {
+            let image = UIImage(named: "avatar")
+            let data = image?.pngData()
+            //let data = image?.jpegData(compressionQuality: 0.9)
+            employeeImageData = data
+            
+        }
         
         guard let employeeOffice = employeeOfficeSegmentedControl.titleForSegment(at: employeeOfficeSegmentedControl.selectedSegmentIndex) else {return}
         
